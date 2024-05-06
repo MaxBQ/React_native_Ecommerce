@@ -4,12 +4,13 @@ import Header from '../components/Header';
 import Fontisto from 'react-native-vector-icons/dist/Fontisto';
 import Categories from '../components/Categories';
 import {useRef, useState} from 'react';
-import ProductCard from '../components/ProductCard';
+import ProductCard, {ProductItem} from '../components/ProductCard';
+import data from '../data/data.json';
 
 const categories = ['Trending Now', 'All', 'New', 'Man', 'Woman'];
 export default function HomeScreen() {
   const [selectCategory, setSelectCategory] = useState<string | null>(null);
-  const [isLike, setIsLike] = useState<boolean>(false);
+  const [products, setProducts] = useState<ProductItem[]>(data.products);
 
   const flatListRef = useRef<FlatList<string> | null>(null);
   const onPressSelect = (item: string, index: number) => {
@@ -21,6 +22,20 @@ export default function HomeScreen() {
         viewPosition: 0.5,
       });
   };
+
+  const handleClick = (item: ProductItem) => {
+    const newProducts: ProductItem[] = products.map(product => {
+      if (item.id === product.id && item?.isLike) {
+        return {...product, isLike: false};
+      } else if (item.id === product.id) {
+        return {...product, isLike: true};
+      }
+      return product;
+    });
+
+    setProducts(newProducts);
+  };
+
   return (
     <LinearGradient colors={['#FDF0F3', '#FFFBFC']} style={styles.container}>
       <Header />
@@ -55,11 +70,12 @@ export default function HomeScreen() {
             </View>
           </>
         }
-        data={[1, 2, 3, 4, 5, 6]}
-        keyExtractor={item => String(item)}
-        renderItem={() => <ProductCard isLike={isLike} setIsLike={setIsLike} />}
+        data={products}
+        keyExtractor={item => String(item.id)}
+        renderItem={({item}) => (
+          <ProductCard item={item} handleClick={handleClick} />
+        )}
         numColumns={2}
-        extraData={isLike}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: 50,

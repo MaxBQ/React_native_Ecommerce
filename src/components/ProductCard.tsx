@@ -1,29 +1,35 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
+import data from '../data/data.json';
+
+export interface ProductItem {
+  id: number;
+  image: string;
+  title: string;
+  price: number;
+  isLike?: boolean;
+}
 
 interface ProductCardProps {
-  isLike: boolean;
-  setIsLike: (like: any) => void;
+  item: ProductItem;
+  handleClick: (item: ProductItem) => void;
 }
 
 const ProductCard = (props: ProductCardProps) => {
-  const {isLike, setIsLike} = props;
-  const clickLike = () => {
-    setIsLike((prev: any) => !prev);
-  };
+  const {item, handleClick} = props;
+
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.imageCard}
-        source={require('../assets/imageCard.png')}
-      />
+      <Image style={styles.imageCard} src={item.image} />
       <View style={styles.containerInfo}>
-        <Text style={styles.title}>Jacket Jeans</Text>
-        <Text style={styles.price}>$45.9</Text>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.price}>${item.price}</Text>
       </View>
-      <TouchableOpacity style={styles.containerLike} onPress={clickLike}>
-        {isLike ? (
+      <TouchableOpacity
+        style={styles.containerLike}
+        onPress={() => handleClick(item)}>
+        {item?.isLike ? (
           <AntDesign name={'heart'} size={20} color="#E55B5B" />
         ) : (
           <AntDesign name={'hearto'} size={20} color="#E55B5B" />
