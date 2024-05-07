@@ -4,13 +4,14 @@ import Header from '../components/Header';
 import Fontisto from 'react-native-vector-icons/dist/Fontisto';
 import Categories from '../components/Categories';
 import {useRef, useState} from 'react';
-import ProductCard, {ProductItem} from '../components/ProductCard';
+import ProductCard, {IProductItem} from '../components/ProductCard';
 import data from '../data/data.json';
+import GradientContainer from '../components/GradientContainer';
 
 const categories = ['Trending Now', 'All', 'New', 'Man', 'Woman'];
 export default function HomeScreen() {
   const [selectCategory, setSelectCategory] = useState<string | null>(null);
-  const [products, setProducts] = useState<ProductItem[]>(data.products);
+  const [products, setProducts] = useState<IProductItem[]>(data.products);
 
   const flatListRef = useRef<FlatList<string> | null>(null);
   const onPressSelect = (item: string, index: number) => {
@@ -23,8 +24,8 @@ export default function HomeScreen() {
       });
   };
 
-  const handleClick = (item: ProductItem) => {
-    const newProducts: ProductItem[] = products.map(product => {
+  const handleClick = (item: IProductItem) => {
+    const newProducts: IProductItem[] = products.map(product => {
       if (item.id === product.id && item?.isLike) {
         return {...product, isLike: false};
       } else if (item.id === product.id) {
@@ -37,9 +38,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <LinearGradient colors={['#FDF0F3', '#FFFBFC']} style={styles.container}>
-      <Header />
-
+    <GradientContainer>
       <FlatList
         ListHeaderComponent={
           <>
@@ -81,13 +80,12 @@ export default function HomeScreen() {
           paddingBottom: 50,
         }}
       />
-    </LinearGradient>
+    </GradientContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: 20},
-  matchText: {fontSize: 28, color: 'black', marginTop: 24, lineHeight: 42},
+  matchText: {fontSize: 28, color: 'black', marginTop: 14, lineHeight: 42},
   searchContainer: {
     backgroundColor: 'white',
     height: 48,

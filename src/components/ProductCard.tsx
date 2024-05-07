@@ -2,8 +2,10 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import data from '../data/data.json';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-export interface ProductItem {
+export interface IProductItem {
   id: number;
   image: string;
   title: string;
@@ -12,15 +14,21 @@ export interface ProductItem {
 }
 
 interface ProductCardProps {
-  item: ProductItem;
-  handleClick: (item: ProductItem) => void;
+  item: IProductItem;
+  handleClick: (item: IProductItem) => void;
 }
 
 const ProductCard = (props: ProductCardProps) => {
   const {item, handleClick} = props;
 
+  const {navigate} = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      onPress={() => {
+        navigate('ProductDetail', {item});
+      }}
+      style={styles.container}>
       <Image style={styles.imageCard} src={item.image} />
       <View style={styles.containerInfo}>
         <Text style={styles.title}>{item.title}</Text>
@@ -35,7 +43,7 @@ const ProductCard = (props: ProductCardProps) => {
           <AntDesign name={'hearto'} size={20} color="#E55B5B" />
         )}
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 
