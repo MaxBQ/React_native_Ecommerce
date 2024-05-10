@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   textParams: {
     fontSize: 20,
     fontWeight: '500',
-    marginTop: 25,
+    marginTop: 15,
     marginBottom: 10,
     color: '#444444',
   },

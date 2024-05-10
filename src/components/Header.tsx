@@ -1,15 +1,31 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
+import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const Header = () => {
+  const {name} = useRoute();
+  const {navigate} = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   return (
     <View style={styles.container}>
-      <View style={styles.headerMenuContainer}>
-        <Image
-          style={styles.headerMenu}
-          source={require('../assets/HeaderMenu.png')}
-        />
-      </View>
+      {name !== 'Cart' ? (
+        <View style={styles.headerMenuContainer}>
+          <Image
+            style={styles.headerMenu}
+            source={require('../assets/HeaderMenu.png')}
+          />
+        </View>
+      ) : (
+        <TouchableOpacity
+          onPress={() => {
+            navigate('HomeStack');
+          }}
+          style={styles.headerMenuContainer}>
+          <Ionicons name="chevron-back" size={25} color={'#E96E6E'} />
+        </TouchableOpacity>
+      )}
+      {name === 'Cart' ? <Text style={styles.title}>My Cart</Text> : null}
       <Image style={styles.dp} source={require('../assets/AccountW.png')} />
     </View>
   );
@@ -23,6 +39,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
+  },
+  title: {
+    fontSize: 28,
+    color: 'black',
   },
   headerMenu: {
     height: 28,

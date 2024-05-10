@@ -8,6 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/dist/MaterialCommu
 import HomeScreen from './src/screens/HomeScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProductDetailScreen from './src/screens/ProductDetailScreen';
+import CartScreen from './src/screens/CartScreen';
 
 function SettingsScreen() {
   return (
@@ -21,9 +22,7 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const HomeStack = () => (
-  <Stack.Navigator
-    screenOptions={{headerShown: false}}
-    initialRouteName="ProductDetail">
+  <Stack.Navigator screenOptions={{headerShown: false}}>
     <Stack.Screen name="Home" component={HomeScreen} />
     <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
   </Stack.Navigator>
@@ -58,7 +57,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Cart"
-          component={SettingsScreen}
+          component={CartScreen}
           options={{
             tabBarIcon: ({size, color}) => (
               <MaterialCommunityIcons name="cart" size={size} color={color} />
