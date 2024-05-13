@@ -11,6 +11,7 @@ import React, {useState} from 'react';
 import GradientContainer from '../components/GradientContainer';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {IProductItem} from '../components/ProductCard';
+import ButtonRed from '../components/ButtonRed';
 
 type TParamList = {
   ProductDetail: {
@@ -55,7 +56,7 @@ const ProductDetailScreen = () => {
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.price}>${item.price}</Text>
         </View>
-        <View>
+        <View style={styles.sizeContainer}>
           <Text style={styles.textParams}>Size</Text>
           <View style={styles.containerParams}>
             {sizes.map(size => (
@@ -74,7 +75,7 @@ const ProductDetailScreen = () => {
             ))}
           </View>
         </View>
-        <View>
+        <View style={styles.colorContainer}>
           <Text style={styles.textParams}>Color</Text>
           <View style={styles.containerParams}>
             {colors.map(color => (
@@ -91,9 +92,9 @@ const ProductDetailScreen = () => {
             ))}
           </View>
         </View>
-        <TouchableOpacity style={styles.buttonCart}>
-          <Text style={styles.buttonCartText}>Add to Cart</Text>
-        </TouchableOpacity>
+        <View style={{marginTop: 20}}>
+          <ButtonRed text="Add to Cart" />
+        </View>
       </ScrollView>
     </GradientContainer>
   );
@@ -110,6 +111,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
+    paddingHorizontal: 10,
+  },
+  sizeContainer: {
+    paddingHorizontal: 10,
+  },
+  colorContainer: {
+    paddingHorizontal: 10,
   },
   title: {
     fontSize: 20,
@@ -156,17 +164,5 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-  },
-  buttonCart: {
-    backgroundColor: '#E96E6E',
-    marginTop: 20,
-    padding: 15,
-    borderRadius: 20,
-  },
-  buttonCartText: {
-    textAlign: 'center',
-    fontSize: 24,
-    fontWeight: '500',
-    color: 'white',
   },
 });

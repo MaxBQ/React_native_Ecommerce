@@ -85,13 +85,20 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  matchText: {fontSize: 28, color: 'black', marginTop: 14, lineHeight: 42},
+  matchText: {
+    fontSize: 28,
+    color: 'black',
+    marginTop: 14,
+    lineHeight: 42,
+    marginHorizontal: 10,
+  },
   searchContainer: {
     backgroundColor: 'white',
     height: 48,
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 20,
+    marginHorizontal: 10,
     borderRadius: 12,
   },
   iconContainer: {
